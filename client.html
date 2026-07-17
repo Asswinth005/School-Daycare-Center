@@ -1,0 +1,910 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" class="scroll-smooth">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Parent Dashboard | Little Blossom | School & Daycare</title>
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='28' fill='%23FFBFA3'/%3E%3Ccircle cx='36' cy='40' r='7' fill='%23FFFFFF'/%3E%3Ccircle cx='64' cy='40' r='7' fill='%23FFFFFF'/%3E%3Ccircle cx='50' cy='56' r='7' fill='%23FFFFFF'/%3E%3C/svg%3E">
+    <meta name="description" content="Parent dashboard for Little Blossom School - view child attendance, homework assignments, teacher announcements, and pay fees online.">
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            primary: '#111111',
+                            secondary: '#2E2E2E',
+                            muted: '#4A4A4A',
+                            border: '#F0E3DC',
+                            accent: '#FFBFA3',
+                            'accent-dark': '#E8A385',
+                            'accent-light': '#FFE6DA',
+                            bg: '#FFFFFF',
+                            'bg-soft': '#FFF9F6',
+                        },
+                        custom: {
+                            peach: '#FFBFA3',
+                            'peach-light': '#FFE6DA',
+                        }
+                    },
+                    fontFamily: {
+                        'sans': ['Inter', 'system-ui', 'sans-serif'],
+                        'heading': ['Poppins', 'Inter', 'sans-serif'],
+                        'display': ['"Poppins"', 'system-ui', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
+
+    <!-- Google Fonts -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&family=Poppins:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet">
+
+    <!-- Font Awesome 6 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        body {
+            background: #FFF9F6;
+            font-family: 'Inter', sans-serif;
+            color: #111111;
+            line-height: 1.5;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .dark body {
+            background: #1A1A1A;
+            color: #F5F5F5;
+        }
+
+        .dark .text-brand-primary {
+            color: #F5F5F5 !important;
+        }
+
+        .dark .text-brand-secondary {
+            color: #E0E0E0 !important;
+        }
+
+        .dark .text-brand-muted {
+            color: #AAAAAA !important;
+        }
+
+        /* Sidebar Navigation */
+        .sidebar {
+            position: fixed;
+            left: 0;
+            top: 0;
+            height: 100vh;
+            width: 280px;
+            background: white;
+            border-right: 1px solid #F0E3DC;
+            transition: transform 0.3s ease;
+            z-index: 100;
+            overflow-y: auto;
+        }
+
+        .dark .sidebar {
+            background: #2A2A2A;
+            border-right-color: #3A3A3A;
+        }
+
+        @media (max-width: 768px) {
+            .sidebar {
+                transform: translateX(-100%);
+            }
+
+            .sidebar.open {
+                transform: translateX(0);
+            }
+        }
+
+        .sidebar-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 99;
+            display: none;
+        }
+
+        .sidebar-overlay.open {
+            display: block;
+        }
+
+        .sidebar-item {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.85rem 1.5rem;
+            margin: 0.25rem 0.75rem;
+            border-radius: 12px;
+            color: #2E2E2E;
+            transition: all 0.2s;
+            cursor: pointer;
+        }
+
+        .dark .sidebar-item {
+            color: #E0E0E0;
+        }
+
+        .sidebar-item:hover {
+            background: rgba(255, 191, 163, 0.15);
+            color: #111111;
+        }
+
+        .sidebar-item.active {
+            background: #FFBFA3;
+            color: #111111;
+        }
+
+        .dark .sidebar-item.active {
+            background: #FFBFA3;
+            color: #111111;
+        }
+
+        .sidebar-item i {
+            width: 24px;
+            font-size: 1.1rem;
+        }
+
+        /* Main Content */
+        .main-content {
+            margin-left: 280px;
+            padding: 1.5rem;
+            min-height: 100vh;
+        }
+
+        @media (max-width: 768px) {
+            .main-content {
+                margin-left: 0;
+                padding-top: 70px;
+            }
+        }
+
+        /* Mobile Header */
+        .mobile-header {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: white;
+            padding: 0.75rem 1rem;
+            border-bottom: 1px solid #F0E3DC;
+            z-index: 50;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .dark .mobile-header {
+            background: #2A2A2A;
+            border-bottom-color: #3A3A3A;
+        }
+
+        @media (max-width: 768px) {
+            .mobile-header {
+                display: flex;
+            }
+        }
+
+        /* Top Header */
+        .top-header {
+            background: white;
+            border-radius: 20px;
+            padding: 1rem 1.5rem;
+            margin-bottom: 1.5rem;
+            border: 1px solid #F0E3DC;
+        }
+
+        .dark .top-header {
+            background: #2A2A2A;
+            border-color: #3A3A3A;
+        }
+
+        /* Cards */
+        .stat-card {
+            background: white;
+            border-radius: 20px;
+            padding: 1.2rem;
+            border: 1px solid #F0E3DC;
+            transition: all 0.3s;
+        }
+
+        .dark .stat-card {
+            background: #2A2A2A;
+            border-color: #3A3A3A;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-3px);
+            border-color: #FFBFA3;
+        }
+
+        /* Assignment Card */
+        .assignment-card {
+            background: white;
+            border-radius: 16px;
+            padding: 1rem;
+            border: 1px solid #F0E3DC;
+            transition: all 0.2s;
+        }
+
+        .dark .assignment-card {
+            background: #2A2A2A;
+            border-color: #3A3A3A;
+        }
+
+        .assignment-card:hover {
+            border-color: #FFBFA3;
+        }
+
+        /* Status Badge */
+        .status-badge {
+            display: inline-flex;
+            align-items: center;
+            padding: 0.25rem 0.75rem;
+            border-radius: 40px;
+            font-size: 0.7rem;
+            font-weight: 600;
+        }
+
+        .status-completed {
+            background: #E8F5E9;
+            color: #2E7D32;
+        }
+
+        .status-pending {
+            background: #FFF3E0;
+            color: #EF6C00;
+        }
+
+        .status-upcoming {
+            background: #E3F2FD;
+            color: #1E4A76;
+        }
+
+        .dark .status-completed {
+            background: #1B5E20;
+            color: #A5D6A7;
+        }
+
+        .dark .status-pending {
+            background: #E65100;
+            color: #FFCC80;
+        }
+
+        .dark .status-upcoming {
+            background: #01579B;
+            color: #81D4FA;
+        }
+
+        /* Progress Bar */
+        .progress-bar {
+            height: 6px;
+            background: #F0E3DC;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .dark .progress-bar {
+            background: #3A3A3A;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: #FFBFA3;
+            border-radius: 10px;
+            transition: width 0.5s ease;
+        }
+
+        /* Toggle Button */
+        .toggle-btn {
+            width: 36px;
+            height: 36px;
+            border-radius: 10px;
+            background: #FFF9F6;
+            color: #2E2E2E;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.2s;
+            border: none;
+        }
+
+        .dark .toggle-btn {
+            background: #3A3A3A;
+            color: #E0E0E0;
+        }
+
+        .toggle-btn:hover {
+            background: #FFBFA3;
+            color: #111111;
+        }
+
+        /* Primary Button */
+        .btn-primary {
+            background: #111111;
+            color: white;
+            padding: 0.7rem 1.5rem;
+            border-radius: 40px;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            border: none;
+            cursor: pointer;
+            font-weight: 600;
+        }
+
+        .btn-primary:hover {
+            background: #2A2A2A;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 18px rgba(255, 191, 163, 0.4);
+        }
+
+        .dark .btn-primary {
+            background: #FFFFFF;
+            color: #111111;
+        }
+
+        .dark .btn-primary:hover {
+            background: #FFE6DA;
+            color: #111111;
+        }
+
+        .btn-outline {
+            border: 1.5px solid #111111;
+            background: transparent;
+            color: #111111;
+            padding: 0.6rem 1.2rem;
+            border-radius: 40px;
+            font-weight: 500;
+            transition: all 0.2s;
+        }
+
+        .btn-outline:hover {
+            background: #111111;
+            color: white;
+        }
+
+        .dark .btn-outline {
+            border-color: #F5F5F5;
+            color: #F5F5F5;
+        }
+
+        .dark .btn-outline:hover {
+            background: #F5F5F5;
+            color: #111111;
+        }
+
+        /* Scrollbar */
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #F0E3DC;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #FFBFA3;
+            border-radius: 4px;
+        }
+
+        /* Page transitions */
+        .page-content.hidden {
+            display: none;
+        }
+
+        /* Announcement card */
+        .announcement-card {
+            background: #FFF9F6;
+            border-radius: 16px;
+            padding: 1rem;
+            border-left: 4px solid #FFBFA3;
+        }
+
+        .dark .announcement-card {
+            background: #2A2A2A;
+        }
+
+        /* RTL Support */
+        [dir="rtl"] .sidebar {
+            left: auto;
+            right: 0;
+            border-right: none;
+            border-left: 1px solid #F0E3DC;
+        }
+
+        [dir="rtl"] .main-content {
+            margin-left: 0;
+            margin-right: 280px;
+        }
+
+        @media (max-width: 768px) {
+            [dir="rtl"] .main-content {
+                margin-right: 0;
+            }
+
+            [dir="rtl"] .sidebar {
+                transform: translateX(100%);
+            }
+
+            [dir="rtl"] .sidebar.open {
+                transform: translateX(0);
+            }
+        }
+
+        /* Typography overrides */
+        .font-semibold,
+        .font-bold,
+        .font-extrabold {
+            font-weight: 500 !important;
+        }
+
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6,
+        h1 *,
+        h2 *,
+        h3 *,
+        h4 *,
+        h5 *,
+        h6 *,
+        .font-heading,
+        .font-display,
+        [class*="text-2xl"],
+        [class*="text-3xl"],
+        [class*="text-4xl"],
+        [class*="text-5xl"],
+        [class*="text-6xl"],
+        [class*="text-7xl"] {
+            font-weight: 550 !important;
+        }
+
+        body,
+        p,
+        span,
+        a,
+        li,
+        input,
+        select,
+        textarea {
+            font-weight: 400;
+        }
+    </style>
+</head>
+
+<body class="bg-[#FFF9F6] dark:bg-[#1A1A1A]">
+
+    <div class="mobile-header">
+        <div class="flex items-center gap-3">
+            <button id="menuToggle" class="toggle-btn"><i class="fas fa-bars"></i></button>
+            <a href="index.html" class="flex items-center gap-2 md:gap-3 group shrink-0">
+                <div class="w-9 h-9 md:w-10 md:h-10 bg-[#FFBFA3] rounded-xl flex items-center justify-center shadow-md group-hover:scale-105 transition duration-300">
+                    <i class="fas fa-seedling text-[#111111] text-base md:text-lg"></i>
+                </div>
+                <span class="text-lg md:text-2xl font-display font-extrabold tracking-tight text-[#111111] dark:text-white">LITTLE<span class="text-[#FFBFA3]">BLOSSOM</span></span>
+            </a>
+        </div>
+        <div class="flex gap-2">
+            <button id="theme-toggle-mobile" class="toggle-btn"><i class="fas fa-moon"></i><i class="fas fa-sun hidden"></i></button>
+            <button id="rtl-toggle" class="toggle-btn">⇄</button>
+        </div>
+    </div>
+
+    <div id="sidebarOverlay" class="sidebar-overlay"></div>
+
+    <!-- Sidebar -->
+    <div class="sidebar" id="sidebar">
+        <div class="p-5 border-b border-[#F0E3DC] dark:border-[#3A3A3A]">
+            <a href="index.html" class="flex items-center gap-3 group">
+                <div class="w-10 h-10 bg-[#FFBFA3] rounded-xl flex items-center justify-center shadow-md group-hover:scale-105 transition duration-300">
+                    <i class="fas fa-seedling text-[#111111] text-xl"></i>
+                </div>
+                <div>
+                    <span class="text-xl md:text-2xl font-display font-extrabold text-[#111111] dark:text-white tracking-tight">LITTLE<span class="text-[#FFBFA3]">BLOSSOM</span></span>
+                    <p class="text-xs text-[#4A4A4A] dark:text-[#AAAAAA]">Parent Portal</p>
+                </div>
+            </a>
+        </div>
+        <nav class="py-4">
+            <div class="sidebar-item active" data-page="dashboard"><i class="fas fa-tachometer-alt"></i><span>Dashboard</span></div>
+            <div class="sidebar-item" data-page="attendance"><i class="fas fa-calendar-check"></i><span>Attendance</span></div>
+            <div class="sidebar-item" data-page="homework"><i class="fas fa-book-open"></i><span>Homework</span></div>
+            <div class="sidebar-item" data-page="announcements"><i class="fas fa-bullhorn"></i><span>Announcements</span></div>
+            <div class="sidebar-item" data-page="payments"><i class="fas fa-credit-card"></i><span>Pay Fees</span></div>
+            <div class="sidebar-item" data-page="progress"><i class="fas fa-chart-line"></i><span>Progress Reports</span></div>
+            <div class="sidebar-item" data-page="settings"><i class="fas fa-cog"></i><span>Settings</span></div>
+        </nav>
+        <div class="absolute bottom-0 left-0 right-0 p-4 border-t border-[#F0E3DC] dark:border-[#3A3A3A]">
+            <a href="login.html" class="flex items-center justify-center gap-2 w-full p-2.5 rounded-xl bg-[#FFE6DA]/50 hover:bg-[#FFBFA3] transition font-semibold text-sm text-[#111111]">
+                <i class="fas fa-sign-out-alt"></i>
+                <span>Logout</span>
+            </a>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <div class="top-header flex justify-between items-center flex-wrap gap-3">
+            <div>
+                <h1 class="text-2xl font-heading font-bold" id="page-title">Dashboard</h1>
+                <p class="text-sm text-[#4A4A4A] dark:text-[#AAAAAA]" id="page-subtitle">Welcome back, Sarah</p>
+            </div>
+
+        </div>
+
+        <!-- DASHBOARD -->
+        <div id="page-dashboard" class="page-content">
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
+                <div class="stat-card">
+                    <div class="flex justify-between">
+                        <div>
+                            <p class="text-xs text-[#4A4A4A] dark:text-[#AAAAAA] mb-1">Attendance Rate</p>
+                            <p class="text-2xl font-bold text-[#111111] dark:text-white">96%</p>
+                        </div>
+                        <div class="w-10 h-10 bg-[#FFE6DA] rounded-full flex items-center justify-center"><i class="fas fa-calendar-check text-[#FFBFA3]"></i></div>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="flex justify-between">
+                        <div>
+                            <p class="text-xs text-[#4A4A4A] dark:text-[#AAAAAA] mb-1">Upcoming Homework</p>
+                            <p class="text-2xl font-bold text-[#111111] dark:text-white">2</p>
+                        </div>
+                        <div class="w-10 h-10 bg-[#FFE6DA] rounded-full flex items-center justify-center"><i class="fas fa-book-open text-[#FFBFA3]"></i></div>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="flex justify-between">
+                        <div>
+                            <p class="text-xs text-[#4A4A4A] dark:text-[#AAAAAA] mb-1">New Announcements</p>
+                            <p class="text-2xl font-bold text-[#111111] dark:text-white">3</p>
+                        </div>
+                        <div class="w-10 h-10 bg-[#FFE6DA] rounded-full flex items-center justify-center"><i class="fas fa-bullhorn text-[#FFBFA3]"></i></div>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="flex justify-between">
+                        <div>
+                            <p class="text-xs text-[#4A4A4A] dark:text-[#AAAAAA] mb-1">Next Payment Due</p>
+                            <p class="text-2xl font-bold text-[#111111] dark:text-white">$350</p>
+                        </div>
+                        <div class="w-10 h-10 bg-[#FFE6DA] rounded-full flex items-center justify-center"><i class="fas fa-credit-card text-[#FFBFA3]"></i></div>
+                    </div>
+                </div>
+            </div>
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                <div class="stat-card">
+                    <h3 class="font-heading font-bold text-lg mb-3">Recent Activity</h3>
+                    <div class="space-y-3">
+                        <div class="flex gap-3 pb-2 border-b border-[#F0E3DC] dark:border-[#3A3A3A]"><i class="fas fa-clock text-[#FFBFA3]"></i>
+                            <div>
+                                <p class="text-sm font-medium">Emily checked in</p>
+                                <p class="text-xs text-[#4A4A4A] dark:text-[#AAAAAA]">Today, 8:45 AM</p>
+                            </div>
+                        </div>
+                        <div class="flex gap-3 pb-2 border-b border-[#F0E3DC] dark:border-[#3A3A3A]"><i class="fas fa-book text-[#FFBFA3]"></i>
+                            <div>
+                                <p class="text-sm font-medium">Homework submitted: Reading log</p>
+                                <p class="text-xs text-[#4A4A4A] dark:text-[#AAAAAA]">Yesterday, 5:30 PM</p>
+                            </div>
+                        </div>
+                        <div class="flex gap-3"><i class="fas fa-star text-[#FFBFA3]"></i>
+                            <div>
+                                <p class="text-sm font-medium">Teacher feedback: Great progress!</p>
+                                <p class="text-xs text-[#4A4A4A] dark:text-[#AAAAAA]">Yesterday, 3:15 PM</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <h3 class="font-heading font-bold text-lg mb-3">Quick Actions</h3>
+                    <div class="space-y-3">
+                        <button data-nav="attendance" class="w-full text-left px-4 py-2 bg-[#FFE6DA] rounded-xl hover:bg-[#FFBFA3]/30 transition flex items-center gap-3">
+                            <i class="fas fa-calendar-check text-[#FFBFA3]"></i><span>View Attendance Records</span>
+                        </button>
+                        <button data-nav="homework" class="w-full text-left px-4 py-2 bg-[#FFE6DA] rounded-xl hover:bg-[#FFBFA3]/30 transition flex items-center gap-3">
+                            <i class="fas fa-pencil-alt text-[#FFBFA3]"></i><span>Check Homework</span>
+                        </button>
+                        <button data-nav="payments" class="w-full text-left px-4 py-2 bg-[#FFE6DA] rounded-xl hover:bg-[#FFBFA3]/30 transition flex items-center gap-3">
+                            <i class="fas fa-credit-card text-[#FFBFA3]"></i><span>Pay School Fees</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ATTENDANCE -->
+        <div id="page-attendance" class="page-content hidden">
+            <div class="stat-card">
+                <h3 class="font-heading font-bold text-xl mb-4">Attendance Record</h3>
+                <div class="overflow-x-auto">
+                    <table class="w-full text-sm">
+                        <thead>
+                            <tr class="border-b border-[#F0E3DC] dark:border-[#3A3A3A]">
+                                <th class="text-left py-2 px-3 font-semibold">Date</th>
+                                <th class="text-left py-2 px-3 font-semibold">Check In</th>
+                                <th class="text-left py-2 px-3 font-semibold">Check Out</th>
+                                <th class="text-left py-2 px-3 font-semibold">Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="border-b border-[#F0E3DC] dark:border-[#3A3A3A]">
+                                <td class="py-2 px-3">May 15, 2025</td>
+                                <td class="py-2 px-3">8:42 AM</td>
+                                <td class="py-2 px-3">3:15 PM</td>
+                                <td class="py-2 px-3"><span class="status-badge status-completed">Present</span></td>
+                            </tr>
+                            <tr class="border-b border-[#F0E3DC] dark:border-[#3A3A3A]">
+                                <td class="py-2 px-3">May 14, 2025</td>
+                                <td class="py-2 px-3">8:55 AM</td>
+                                <td class="py-2 px-3">3:10 PM</td>
+                                <td class="py-2 px-3"><span class="status-badge status-completed">Present</span></td>
+                            </tr>
+                            <tr class="border-b border-[#F0E3DC] dark:border-[#3A3A3A]">
+                                <td class="py-2 px-3">May 13, 2025</td>
+                                <td class="py-2 px-3">9:10 AM</td>
+                                <td class="py-2 px-3">3:05 PM</td>
+                                <td class="py-2 px-3"><span class="status-badge status-pending">Late</span></td>
+                            </tr>
+                            <tr>
+                                <td class="py-2 px-3">May 12, 2025</td>
+                                <td class="py-2 px-3">—</td>
+                                <td class="py-2 px-3">—</td>
+                                <td class="py-2 px-3"><span class="status-badge status-upcoming">Absent</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="mt-4 p-3 bg-[#FFF9F6] dark:bg-[#1A1A1A] rounded-xl">
+                    <i class="fas fa-info-circle text-[#FFBFA3] mr-2"></i>
+                    <span class="text-sm">Monthly attendance: 18/20 days present (90%)</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- HOMEWORK -->
+        <div id="page-homework" class="page-content hidden">
+            <div class="stat-card">
+                <h3 class="font-heading font-bold text-xl mb-4">Homework Assignments</h3>
+                <div class="space-y-3">
+                    <div class="assignment-card grid grid-cols-2 md:grid-cols-4 gap-4 items-center">
+                        <div class="col-span-2 md:col-span-1">
+                            <p class="font-bold">Reading Log - Week 12</p>
+                            <p class="text-sm text-[#4A4A4A] dark:text-[#AAAAAA]">Due: May 17, 2025</p>
+                        </div>
+                        <div class="col-span-1"><span class="status-badge status-pending">Pending</span></div>
+                        <div class="col-span-1 text-right"><button class="text-sm font-semibold text-[#FFBFA3] hover:text-[#E8A385]">Submit →</button></div>
+                    </div>
+                    <div class="assignment-card grid grid-cols-2 md:grid-cols-4 gap-4 items-center">
+                        <div class="col-span-2 md:col-span-1">
+                            <p class="font-bold">Math Worksheet - Addition</p>
+                            <p class="text-sm text-[#4A4A4A] dark:text-[#AAAAAA]">Due: May 15, 2025</p>
+                        </div>
+                        <div class="col-span-1"><span class="status-badge status-completed">Completed</span></div>
+                        <div class="col-span-1 text-right"><span class="text-sm text-[#2E7D32]">✓ Submitted</span></div>
+                    </div>
+                    <div class="assignment-card grid grid-cols-2 md:grid-cols-4 gap-4 items-center">
+                        <div class="col-span-2 md:col-span-1">
+                            <p class="font-bold">Science Project - Plants</p>
+                            <p class="text-sm text-[#4A4A4A] dark:text-[#AAAAAA]">Due: May 20, 2025</p>
+                        </div>
+                        <div class="col-span-1"><span class="status-badge status-upcoming">Upcoming</span></div>
+                        <div class="col-span-1 text-right"><button class="text-sm font-semibold text-[#FFBFA3] hover:text-[#E8A385]">View Details →</button></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ANNOUNCEMENTS -->
+        <div id="page-announcements" class="page-content hidden">
+            <div class="stat-card">
+                <h3 class="font-heading font-bold text-xl mb-4">Teacher Announcements</h3>
+                <div class="space-y-3">
+                    <div class="announcement-card">
+                        <div class="flex justify-between items-start">
+                            <div>
+                                <p class="font-bold">📚 Summer Reading Program</p>
+                                <p class="text-sm text-[#4A4A4A] dark:text-[#AAAAAA]">Posted: May 14, 2025</p>
+                            </div>
+                            <span class="text-xs bg-[#FFBFA3] text-[#111111] px-2 py-1 rounded-full">New</span>
+                        </div>
+                        <p class="text-sm mt-2">Our summer reading program starts June 1st! Please sign up by May 25th to reserve your child's spot.</p>
+                    </div>
+                    <div class="announcement-card">
+                        <div class="flex justify-between items-start">
+                            <div>
+                                <p class="font-bold">🎨 Art Show - May 30th</p>
+                                <p class="text-sm text-[#4A4A4A] dark:text-[#AAAAAA]">Posted: May 12, 2025</p>
+                            </div>
+                            <span class="text-xs bg-[#FFE6DA] text-[#111111] px-2 py-1 rounded-full">Reminder</span>
+                        </div>
+                        <p class="text-sm mt-2">Join us for our annual Art Show on May 30th at 6:00 PM. All families are welcome!</p>
+                    </div>
+                    <div class="announcement-card">
+                        <div class="flex justify-between items-start">
+                            <div>
+                                <p class="font-bold">📝 Parent-Teacher Conferences</p>
+                                <p class="text-sm text-[#4A4A4A] dark:text-[#AAAAAA]">Posted: May 10, 2025</p>
+                            </div>
+                        </div>
+                        <p class="text-sm mt-2">Parent-teacher conferences will be held June 3-5. Please sign up for a time slot.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- PAY FEES -->
+        <div id="page-payments" class="page-content hidden">
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 items-stretch">
+                <div class="stat-card lg:col-span-2 flex flex-col h-full">
+                    <h3 class="font-heading font-bold text-xl mb-4">Pay School Fees</h3>
+                    <div class="space-y-4 flex flex-col h-full">
+                        <div><label class="block text-sm font-medium mb-1">Payment Amount</label>
+                            <select class="w-full p-3 rounded-xl border border-[#F0E3DC] dark:border-[#3A3A3A] bg-white dark:bg-[#1A1A1A]">
+                                <option>$350 - Monthly Tuition</option>
+                                <option>$75 - After School Care</option>
+                                <option>$50 - Lunch Program</option>
+                                <option>$120 - Materials Fee</option>
+                            </select>
+                        </div>
+                        <div><label class="block text-sm font-medium mb-1">Payment Method</label>
+                            <select class="w-full p-3 rounded-xl border border-[#F0E3DC] dark:border-[#3A3A3A] bg-white dark:bg-[#1A1A1A]">
+                                <option>Credit Card (Visa/Mastercard)</option>
+                                <option>Debit Card</option>
+                                <option>Bank Transfer</option>
+                            </select>
+                        </div>
+                        <div class="grid grid-cols-2 gap-3">
+                            <div><label class="block text-sm font-medium mb-1">Card Number</label><input type="text" placeholder="**** **** **** 1234" class="w-full p-3 rounded-xl border border-[#F0E3DC] dark:border-[#3A3A3A] bg-white dark:bg-[#1A1A1A]"></div>
+                            <div><label class="block text-sm font-medium mb-1">Expiry</label><input type="text" placeholder="MM/YY" class="w-full p-3 rounded-xl border border-[#F0E3DC] dark:border-[#3A3A3A] bg-white dark:bg-[#1A1A1A]"></div>
+                        </div>
+                        <button class="btn-primary w-full mt-auto"><i class="fas fa-check-circle"></i> Pay Now</button>
+                    </div>
+                </div>
+                <div class="stat-card flex flex-col h-full">
+                    <h3 class="font-heading font-bold text-lg mb-3">Payment Summary</h3>
+                    <div class="space-y-3 flex flex-col h-full">
+                        <div class="flex justify-between"><span class="text-sm">Monthly Tuition</span><span class="font-bold">$350.00</span></div>
+                        <div class="flex justify-between"><span class="text-sm">After School Care</span><span class="font-bold">$75.00</span></div>
+                        <div class="flex justify-between"><span class="text-sm">Lunch Program</span><span class="font-bold">$50.00</span></div>
+                        <div class="border-t border-[#F0E3DC] dark:border-[#3A3A3A] pt-2 flex justify-between"><span class="font-bold">Total Due</span><span class="font-bold text-[#FFBFA3]">$475.00</span></div>
+                        <div class="mt-auto pt-3"><span class="status-badge status-pending">Payment Due: May 25</span></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- PROGRESS REPORTS -->
+        <div id="page-progress" class="page-content hidden">
+            <div class="stat-card">
+                <h3 class="font-heading font-bold text-xl mb-4">Progress Reports</h3>
+                <div class="space-y-4">
+                    <div class="assignment-card">
+                        <div class="flex justify-between items-start flex-wrap">
+                            <div>
+                                <p class="font-bold">Spring 2025 Progress Report</p>
+                                <p class="text-sm text-[#4A4A4A] dark:text-[#AAAAAA]">Released: May 1, 2025</p>
+                            </div>
+                            <span class="status-badge status-completed">Available</span>
+                        </div>
+                        <div class="mt-2"><span class="text-sm">Reading: <strong>Exceeding</strong> | Math: <strong>Meeting</strong> | Social: <strong>Exceeding</strong></span></div>
+                        <div class="mt-2 text-right"><button class="text-sm font-semibold text-[#FFBFA3] hover:text-[#E8A385]">Download PDF →</button></div>
+                    </div>
+                    <div class="assignment-card">
+                        <div class="flex justify-between items-start flex-wrap">
+                            <div>
+                                <p class="font-bold">Winter 2024-2025 Progress Report</p>
+                                <p class="text-sm text-[#4A4A4A] dark:text-[#AAAAAA]">Released: January 15, 2025</p>
+                            </div>
+                            <span class="status-badge status-completed">Available</span>
+                        </div>
+                        <div class="mt-2"><span class="text-sm">Reading: <strong>Meeting</strong> | Math: <strong>Meeting</strong> | Social: <strong>Exceeding</strong></span></div>
+                        <div class="mt-2 text-right"><button class="text-sm font-semibold text-[#FFBFA3] hover:text-[#E8A385]">Download PDF →</button></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SETTINGS -->
+        <div id="page-settings" class="page-content hidden">
+            <div class="stat-card">
+                <h3 class="font-heading font-bold text-xl mb-4">Account Settings</h3>
+                <div class="space-y-4">
+                    <div><label class="block text-sm font-medium mb-1">Parent Full Name</label><input type="text" value="Sarah Johnson" class="w-full p-3 rounded-xl border border-[#F0E3DC] dark:border-[#3A3A3A] bg-white dark:bg-[#1A1A1A]"></div>
+                    <div><label class="block text-sm font-medium mb-1">Phone Number</label><input type="tel" value="+1 (555) 342-7890" class="w-full p-3 rounded-xl border border-[#F0E3DC] dark:border-[#3A3A3A] bg-white dark:bg-[#1A1A1A]"></div>
+                    <div><label class="block text-sm font-medium mb-1">Email Address</label><input type="email" value="sarah.j@littleblossom.com" class="w-full p-3 rounded-xl border border-[#F0E3DC] dark:border-[#3A3A3A] bg-white dark:bg-[#1A1A1A]"></div>
+                    <div><label class="block text-sm font-medium mb-1">Child's Name</label><input type="text" value="Emily Johnson - Age 5" class="w-full p-3 rounded-xl border border-[#F0E3DC] dark:border-[#3A3A3A] bg-white dark:bg-[#1A1A1A]"></div>
+                    <div><label class="block text-sm font-medium mb-1">Notification Preferences</label>
+                        <div class="space-y-2">
+                            <label class="flex items-center gap-2"><input type="checkbox" checked class="rounded text-[#FFBFA3]"> SMS updates for attendance</label>
+                            <label class="flex items-center gap-2"><input type="checkbox" checked class="rounded text-[#FFBFA3]"> Email homework reminders</label>
+                            <label class="flex items-center gap-2"><input type="checkbox" class="rounded text-[#FFBFA3]"> Newsletter &amp; event updates</label>
+                        </div>
+                    </div>
+                    <button class="btn-primary w-full md:w-auto">Save Changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Theme Toggle
+            const themeToggle = document.getElementById('theme-toggle');
+            const themeToggleMobile = document.getElementById('theme-toggle-mobile');
+            function setTheme(isDark) {
+                if (isDark) document.documentElement.classList.add('dark');
+                else document.documentElement.classList.remove('dark');
+                [themeToggle, themeToggleMobile].forEach(btn => {
+                    if (btn) {
+                        let moon = btn.querySelector('.fa-moon'), sun = btn.querySelector('.fa-sun');
+                        if (isDark) { moon?.classList.add('hidden'); sun?.classList.remove('hidden'); }
+                        else { moon?.classList.remove('hidden'); sun?.classList.add('hidden'); }
+                    }
+                });
+                localStorage.setItem('theme', isDark ? 'dark' : 'light');
+            }
+            const savedTheme = localStorage.getItem('theme');
+            setTheme(savedTheme === 'dark');
+            if (themeToggle) themeToggle.addEventListener('click', () => setTheme(!document.documentElement.classList.contains('dark')));
+            if (themeToggleMobile) themeToggleMobile.addEventListener('click', () => setTheme(!document.documentElement.classList.contains('dark')));
+
+            // RTL
+            const rtlBtns = document.querySelectorAll('#rtl-toggle, #rtl-toggle-desktop');
+            function setRTL(isRTL) { document.documentElement.dir = isRTL ? 'rtl' : 'ltr'; localStorage.setItem('dir', isRTL ? 'rtl' : 'ltr'); }
+            if (localStorage.getItem('dir') === 'rtl') setRTL(true);
+            rtlBtns.forEach(btn => btn?.addEventListener('click', () => setRTL(document.documentElement.dir !== 'rtl')));
+
+            // Mobile Sidebar
+            const menuToggle = document.getElementById('menuToggle'), sidebar = document.getElementById('sidebar'), overlay = document.getElementById('sidebarOverlay');
+            function closeSidebar() { sidebar.classList.remove('open'); overlay.classList.remove('open'); }
+            function openSidebar() { sidebar.classList.add('open'); overlay.classList.add('open'); }
+            if (menuToggle) menuToggle.addEventListener('click', (e) => { e.stopPropagation(); sidebar.classList.contains('open') ? closeSidebar() : openSidebar(); });
+            if (overlay) overlay.addEventListener('click', closeSidebar);
+            window.addEventListener('resize', () => { if (window.innerWidth > 768 && sidebar.classList.contains('open')) closeSidebar(); });
+
+            // Navigation
+            const sidebarItems = document.querySelectorAll('.sidebar-item');
+            const pages = document.querySelectorAll('.page-content');
+            const pageTitle = document.getElementById('page-title'), pageSubtitle = document.getElementById('page-subtitle');
+            const titles = {
+                dashboard: { title: 'Dashboard', subtitle: 'Welcome back, Sarah' },
+                attendance: { title: 'Attendance', subtitle: 'View your child\'s attendance records' },
+                homework: { title: 'Homework', subtitle: 'Check and submit assignments' },
+                announcements: { title: 'Announcements', subtitle: 'Read teacher announcements' },
+                payments: { title: 'Pay Fees', subtitle: 'Pay school fees online' },
+                progress: { title: 'Progress Reports', subtitle: 'View your child\'s progress' },
+                settings: { title: 'Settings', subtitle: 'Update your profile' }
+            };
+            function navigateTo(page) {
+                sidebarItems.forEach(i => i.classList.remove('active'));
+                document.querySelector(`.sidebar-item[data-page="${page}"]`)?.classList.add('active');
+                pages.forEach(p => p.classList.add('hidden'));
+                document.getElementById(`page-${page}`)?.classList.remove('hidden');
+                if (titles[page]) { pageTitle.textContent = titles[page].title; pageSubtitle.textContent = titles[page].subtitle; }
+                closeSidebar();
+            }
+            sidebarItems.forEach(item => { item.addEventListener('click', () => { navigateTo(item.getAttribute('data-page')); }); });
+            document.querySelectorAll('[data-nav]').forEach(btn => { btn.addEventListener('click', () => { navigateTo(btn.getAttribute('data-nav')); }); });
+        });
+    </script>
+</body>
+
+</html>
