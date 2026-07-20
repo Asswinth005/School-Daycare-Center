@@ -287,7 +287,25 @@
 
     /* home 2 specific: large hero image placeholder, floating shapes */
     .hero-grid-bg {
-      background: radial-gradient(circle at 70% 20%, rgba(255,191,163,0.15) 0%, transparent 60%);
+      background-image: linear-gradient(rgba(255, 249, 246, 0.70), rgba(255, 255, 255, 0.80)), url('assets/hero_index.png');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+    }
+    .hero-grid-bg h1 {
+      text-shadow: 0 1px 3px rgba(255, 255, 255, 0.8);
+    }
+    .hero-grid-bg p {
+      text-shadow: 0 1px 2px rgba(255, 255, 255, 0.8);
+    }
+    .dark .hero-grid-bg {
+      background-image: linear-gradient(rgba(26, 26, 26, 0.70), rgba(26, 26, 26, 0.80)), url('assets/hero_index.png');
+    }
+    .dark .hero-grid-bg h1 {
+      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.7);
+    }
+    .dark .hero-grid-bg p {
+      text-shadow: 0 1px 3px rgba(0, 0, 0, 0.7);
     }
     .floating-shape {
       animation: floatSlow 8s ease-in-out infinite;

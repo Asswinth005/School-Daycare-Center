@@ -287,8 +287,22 @@
 
     /* about page specific */
     .about-hero-bg {
-      background: radial-gradient(circle at 80% 30%, rgba(255,191,163,0.12) 0%, transparent 55%),
-                  radial-gradient(circle at 20% 80%, rgba(255,191,163,0.08) 0%, transparent 50%);
+      background-image: url('assets/hero_about.png');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+    }
+    .about-hero-bg h1 {
+      text-shadow: 0 1px 3px rgba(255, 255, 255, 0.8);
+    }
+    .about-hero-bg p {
+      text-shadow: 0 1px 2px rgba(255, 255, 255, 0.8);
+    }
+    .dark .about-hero-bg h1 {
+      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.7);
+    }
+    .dark .about-hero-bg p {
+      text-shadow: 0 1px 3px rgba(0, 0, 0, 0.7);
     }
     .team-card {
       transition: all 0.3s ease;
@@ -474,9 +488,9 @@
   </nav>
 
   <!-- ======== ABOUT HERO (different design) ======== -->
-  <section class="min-h-[60vh] flex items-center pt-32 pb-16 md:pt-40 md:pb-20 relative overflow-hidden bg-white dark:bg-[#1A1A1A] about-hero-bg">
+  <section class="min-h-[75vh] flex items-center pt-36 pb-20 md:pt-48 md:pb-28 relative overflow-hidden bg-white dark:bg-[#1A1A1A] about-hero-bg">
         <div class="absolute inset-0 z-0">
-      <div class="absolute inset-0 bg-gradient-to-b from-[#FFF9F6]/30 via-white/50 to-white dark:from-[#1A1A1A]/40 dark:via-[#1A1A1A]/60 dark:to-[#1A1A1A]"></div>
+      <div class="absolute inset-0 bg-gradient-to-b from-[#FFF9F6]/50 via-white/70 to-white dark:from-[#1A1A1A]/55 dark:via-[#1A1A1A]/70 dark:to-[#1A1A1A]"></div>
     </div>
     <div class="container mx-auto px-6 relative z-10">
       <div class="max-w-4xl mx-auto text-center animate-slide-up">
@@ -489,6 +503,14 @@
         <p class="text-lg md:text-xl text-[#2E2E2E] dark:text-[#E0E0E0] max-w-2xl mx-auto">
           At Little Blossom, we believe every child deserves a warm, joyful, and inspiring start to their educational journey.
         </p>
+        <div class="flex flex-wrap justify-center gap-4 mt-8">
+          <a href="contact.html" class="btn-primary-school px-8 py-3 rounded-full inline-flex items-center gap-2 text-base shadow-lg">
+            <i class="fas fa-envelope"></i> Contact Us
+          </a>
+          <a href="curriculum.html" class="btn-outline-school px-8 py-3 rounded-full inline-flex items-center gap-2 text-base bg-white/40 dark:bg-transparent backdrop-blur-sm">
+            <i class="fas fa-book-open"></i> Our Curriculum
+          </a>
+        </div>
       </div>
     </div>
   </section>

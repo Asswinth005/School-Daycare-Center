@@ -284,6 +284,26 @@
     [dir="rtl"] .dropdown-item i { margin-right: 0; margin-left: 0.75rem; }
     [dir="rtl"] .dropdown-item:hover { padding-left: 1.4rem; padding-right: 1.7rem; }
     [dir="rtl"] .testimonial-card-school { border-left: none; border-right: 5px solid #FFBFA3; }
+
+    /* hero background */
+    .index-hero-bg {
+      background-image: url('assets/hero_index.png');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+    }
+    .index-hero-bg h1 {
+      text-shadow: 0 1px 3px rgba(255, 255, 255, 0.8);
+    }
+    .index-hero-bg p {
+      text-shadow: 0 1px 2px rgba(255, 255, 255, 0.8);
+    }
+    .dark .index-hero-bg h1 {
+      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.7);
+    }
+    .dark .index-hero-bg p {
+      text-shadow: 0 1px 3px rgba(0, 0, 0, 0.7);
+    }
   </style>
 </head>
 <body class="warm-pattern">
@@ -446,9 +466,9 @@
     </div>
   </nav>
   <!-- ======== HERO ======== -->
-  <section class="min-h-screen flex items-center pt-32 pb-12 md:pt-40 md:pb-16 relative overflow-hidden bg-white dark:bg-[#1A1A1A]">
+  <section class="min-h-screen flex items-center pt-32 pb-12 md:pt-40 md:pb-16 relative overflow-hidden bg-white dark:bg-[#1A1A1A] index-hero-bg">
         <div class="absolute inset-0 z-0">
-      <div class="absolute inset-0 bg-gradient-to-b from-[#FFF9F6]/40 via-white/60 to-white dark:from-[#1A1A1A]/60 dark:via-[#1A1A1A]/80 dark:to-[#1A1A1A]"></div>
+      <div class="absolute inset-0 bg-gradient-to-b from-[#FFF9F6]/50 via-white/70 to-white dark:from-[#1A1A1A]/55 dark:via-[#1A1A1A]/70 dark:to-[#1A1A1A]"></div>
     </div>
     <div class="container mx-auto px-6 relative z-10">
       <div class="max-w-4xl mx-auto text-center animate-slide-up">

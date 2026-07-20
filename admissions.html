@@ -287,8 +287,22 @@
 
     /* admissions page specific */
     .admissions-hero-bg {
-      background: radial-gradient(circle at 70% 30%, rgba(255,191,163,0.12) 0%, transparent 50%),
-                  radial-gradient(circle at 20% 70%, rgba(255,191,163,0.06) 0%, transparent 45%);
+      background-image: url('assets/hero_admissions.png');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+    }
+    .admissions-hero-bg h1 {
+      text-shadow: 0 1px 3px rgba(255, 255, 255, 0.8);
+    }
+    .admissions-hero-bg p {
+      text-shadow: 0 1px 2px rgba(255, 255, 255, 0.8);
+    }
+    .dark .admissions-hero-bg h1 {
+      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.7);
+    }
+    .dark .admissions-hero-bg p {
+      text-shadow: 0 1px 3px rgba(0, 0, 0, 0.7);
     }
     .step-card {
       transition: all 0.3s ease;
@@ -498,9 +512,9 @@
   </nav>
 
   <!-- ======== ADMISSIONS HERO ======== -->
-  <section class="min-h-[55vh] flex items-center pt-32 pb-16 md:pt-40 md:pb-20 relative overflow-hidden bg-white dark:bg-[#1A1A1A] admissions-hero-bg">
+  <section class="min-h-[75vh] flex items-center pt-36 pb-20 md:pt-48 md:pb-28 relative overflow-hidden bg-white dark:bg-[#1A1A1A] admissions-hero-bg">
         <div class="absolute inset-0 z-0">
-      <div class="absolute inset-0 bg-gradient-to-b from-[#FFF9F6]/30 via-white/50 to-white dark:from-[#1A1A1A]/30 dark:via-[#1A1A1A]/50 dark:to-[#1A1A1A]"></div>
+      <div class="absolute inset-0 bg-gradient-to-b from-[#FFF9F6]/50 via-white/70 to-white dark:from-[#1A1A1A]/55 dark:via-[#1A1A1A]/70 dark:to-[#1A1A1A]"></div>
     </div>
     <div class="container mx-auto px-6 relative z-10">
       <div class="max-w-4xl mx-auto text-center animate-slide-up">
@@ -513,13 +527,28 @@
         <p class="text-lg md:text-xl text-[#2E2E2E] dark:text-[#E0E0E0] max-w-2xl mx-auto">
           We're so glad you're considering Little Blossom. Here's everything you need to know to begin your journey with us.
         </p>
+        <div class="flex flex-wrap justify-center gap-4 mt-8">
+          <a href="contact.html" class="btn-primary-school px-8 py-3 rounded-full inline-flex items-center gap-2 text-base shadow-lg">
+            <i class="fas fa-envelope"></i> Contact Us
+          </a>
+          <a href="#why-choose-us" class="btn-outline-school px-8 py-3 rounded-full inline-flex items-center gap-2 text-base bg-white/40 dark:bg-transparent backdrop-blur-sm">
+            <i class="fas fa-info-circle"></i> Why Choose Us
+          </a>
+        </div>
       </div>
     </div>
   </section>
 
   <!-- ======== WHY CHOOSE US (admissions specific) ======== -->
-  <section class="py-16 bg-white dark:bg-[#1A1A1A]">
+  <section id="why-choose-us" class="py-16 bg-white dark:bg-[#1A1A1A] border-t border-[#F0E3DC] dark:border-[#3A3A3A]">
     <div class="container mx-auto px-6">
+      <div class="text-center mb-12">
+        <span class="inline-block bg-[#FFE6DA] dark:bg-[#2A2A2A] text-[#111111] dark:text-white px-5 py-1.5 rounded-full text-sm font-semibold tracking-wide">
+          <i class="fas fa-question-circle text-[#FFBFA3]"></i> why little blossom
+        </span>
+        <h2 class="text-3xl md:text-4xl font-display font-bold mt-5 text-[#111111] dark:text-white">Why <span class="text-[#FFBFA3]">Choose</span> Us?</h2>
+        <p class="text-[#2E2E2E] dark:text-[#E0E0E0] max-w-2xl mx-auto mt-3">Discover what makes our school & daycare center a unique and wonderful place for children to learn and grow.</p>
+      </div>
       <div class="grid md:grid-cols-3 gap-6 max-w-5xl mx-auto">
         <div class="text-center p-8 rounded-2xl bg-[#FFF9F6] dark:bg-[#252525] border border-[#F0E3DC] dark:border-[#3A3A3A]">
           <div class="w-14 h-14 mx-auto rounded-full bg-[#FFE6DA] dark:bg-[#3A2A24] flex items-center justify-center text-2xl text-[#FFBFA3] mb-4">
@@ -582,8 +611,15 @@
   </section>
 
   <!-- ======== IMPORTANT DATES & INFO ======== -->
-  <section class="py-20 bg-white dark:bg-[#1A1A1A]">
+  <section id="dates" class="py-20 bg-white dark:bg-[#1A1A1A]">
     <div class="container mx-auto px-6">
+      <div class="text-center mb-12">
+        <span class="inline-block bg-[#FFE6DA] dark:bg-[#2A2A2A] text-[#111111] dark:text-white px-5 py-1.5 rounded-full text-sm font-semibold tracking-wide">
+          <i class="fas fa-calendar-alt text-[#FFBFA3]"></i> dates & docs
+        </span>
+        <h2 class="text-3xl md:text-4xl font-display font-bold mt-5 text-[#111111] dark:text-white">Admissions <span class="text-[#FFBFA3]">Timeline</span> & Info</h2>
+        <p class="text-[#2E2E2E] dark:text-[#E0E0E0] max-w-2xl mx-auto mt-3">Stay on track with our key dates and prepare all necessary documentation for your child's application.</p>
+      </div>
       <div class="max-w-5xl mx-auto">
         <div class="grid md:grid-cols-2 gap-8">
           <div class="info-box rounded-2xl p-8 border border-[#F0E3DC] dark:border-[#3A3A3A]">
