@@ -25,15 +25,15 @@
               secondary: '#2E2E2E',
               muted: '#4A4A4A',
               border: '#F0E3DC',
-              accent: '#FFBFA3',
-              'accent-dark': '#E8A385',
-              'accent-light': '#FFE6DA',
+              accent: '#FF8E6C',
+              'accent-dark': '#F27A58',
+              'accent-light': '#FFE0D3',
               bg: '#FFFFFF',
-              'bg-soft': '#FFF9F6',
+              'bg-soft': '#FFF5F0',
             },
             custom: {
-              peach: '#FFBFA3',
-              'peach-light': '#FFE6DA',
+              peach: '#FF8E6C',
+              'peach-light': '#FFE0D3',
             }
           },
           fontFamily: {
@@ -74,6 +74,37 @@
     }
     .font-extrabold {
       font-weight: 800 !important;
+    }
+    /* Color Vibrancy Overrides */
+    .bg-\[\#FFBFA3\], .bg-brand-accent {
+      background-color: #FF8E6C;
+    }
+    .text-\[\#FFBFA3\], .text-brand-accent {
+      color: #FF8E6C;
+    }
+    .border-\[\#FFBFA3\], .border-brand-accent {
+      border-color: #FF8E6C;
+    }
+    .bg-\[\#FFE6DA\], .bg-brand-accent-light {
+      background-color: #FFE0D3;
+    }
+    .text-\[\#FFE6DA\], .text-brand-accent-light {
+      color: #FFE0D3;
+    }
+    .border-\[\#FFE6DA\], .border-brand-accent-light {
+      border-color: #FFE0D3;
+    }
+    .hover\:bg-\[\#E8A385\]:hover, .hover\:bg-brand-accent-dark:hover {
+      background-color: #F27A58;
+    }
+    .bg-\[\#FFF9F6\], .bg-brand-bg-soft {
+      background-color: #FFF5F0;
+    }
+    .text-\[\#FFF9F6\], .text-brand-bg-soft {
+      color: #FFF5F0;
+    }
+    .border-\[\#FFF9F6\], .border-brand-bg-soft {
+      border-color: #FFF5F0;
     }
     body {
       background-color: #FFFFFF;
