@@ -595,7 +595,28 @@
                 <h1 class="text-2xl font-heading font-bold" id="page-title">Dashboard</h1>
                 <p class="text-sm text-[#4A4A4A] dark:text-[#AAAAAA]" id="page-subtitle">Welcome back, Sarah</p>
             </div>
-
+            <!-- Desktop header controls -->
+            <div class="hidden lg:flex items-center gap-4">
+                <!-- Theme Toggle Button -->
+                <button id="theme-toggle" class="w-10 h-10 rounded-full bg-white dark:bg-[#2A2A2A] border border-[#F0E3DC] dark:border-[#3A3A3A] flex items-center justify-center text-[#111111] dark:text-white hover:bg-[#FFE0D3] dark:hover:bg-[#3A2A24] transition duration-300 shadow-sm focus:outline-none" title="Toggle Theme">
+                    <i class="fas fa-moon dark:hidden"></i>
+                    <i class="fas fa-sun hidden dark:inline"></i>
+                </button>
+                <!-- RTL Toggle Button -->
+                <button id="rtl-toggle-desktop" class="w-10 h-10 rounded-full bg-white dark:bg-[#2A2A2A] border border-[#F0E3DC] dark:border-[#3A3A3A] flex items-center justify-center text-[#111111] dark:text-white hover:bg-[#FFE0D3] dark:hover:bg-[#3A2A24] transition duration-300 shadow-sm focus:outline-none" title="Toggle RTL">
+                    <i class="fas fa-exchange-alt"></i>
+                </button>
+                <!-- Profile Avatar -->
+                <div class="flex items-center gap-3 border-l border-[#F0E3DC] dark:border-[#3A3A3A] pl-4">
+                    <div class="w-10 h-10 rounded-full overflow-hidden border border-[#FF8E6C] shadow-sm shrink-0">
+                        <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&q=80&w=150&h=150" alt="Sarah Johnson" class="w-full h-full object-cover">
+                    </div>
+                    <div class="text-left hidden lg:block">
+                        <p class="text-sm font-bold text-[#111111] dark:text-white leading-tight">Sarah Johnson</p>
+                        <p class="text-[10px] text-[#4A4A4A] dark:text-[#AAAAAA]">Parent Account</p>
+                    </div>
+                </div>
+            </div>
         </div>
 
         <!-- DASHBOARD -->
